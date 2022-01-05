@@ -28,14 +28,14 @@ trackers = df.loc[:, "trackers"]
 handles = handles.values.tolist()
 
 # Get all trackers in a list
-trackers_permissions = trackers.values.tolist()
+trackers = trackers.values.tolist()
 
 
 dict_trackers = {}
 dict_permissions = {}
 
 # Count nb of each tracker and each permission
-for el in trackers_permissions:
+for el in trackers:
     if type(el) == str:
         el = el.split(",")
         for nb in el:
@@ -49,14 +49,14 @@ for el in trackers_permissions:
                 dict_permissions[nb] = 1
 
 # most_permissions = sorted(dict_permissions.items(), reverse=True, key=lambda t: t[1])
-ordered_trackers = sorted(dict_trackers.items(), key=lambda x: x[1], reverse=True)
+sorted_trackers = sorted(dict_trackers.items(), key=lambda x: x[1], reverse=True)
 
 
 # change dictionary key - tracker id to tracker name
 
 result = {}
 
-for track in ordered_trackers[:20]:
+for track in sorted_trackers[:20]:
     if track[0] != "000":
         key = str_to_dict(info_trackers[track[0]][0])
 
@@ -79,16 +79,16 @@ for track in ordered_trackers[:20]:
 
 
 # Get histo
-plt.bar(list(result.keys()), result.values())
-plt.xticks(rotation="vertical")
-plt.show()
+# plt.bar(list(result.keys()), result.values())
+# plt.xticks(rotation="vertical")
+# plt.show()
 
 
 # Get pie chart of different categories
 
 cat_result = {}
 
-for track in ordered_trackers[:50]:
+for track in sorted_trackers[:50]:
     if track[0] != "000":
         key = str_to_dict(info_trackers[track[0]][0])
         for categories in key["categories"]:
@@ -97,6 +97,7 @@ for track in ordered_trackers[:50]:
                 cat_result[categories] += 1
             else:
                 cat_result[categories] = 1
+# print(cat_result)
 
 keys = cat_result.keys()
 values = cat_result.values()
